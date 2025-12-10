@@ -147,6 +147,7 @@ hr {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  user-select: none;
   -ms-touch-action: none;
   touch-action: none;
   background: #81c784;
@@ -547,15 +548,16 @@ hr {
     font-size: 15px; }
 
   body {
-    margin: 20px 0;
-    padding: 0 20px; }
+    margin: 12px 0;
+    padding: 0 8px; }
 
   h1.title {
     font-size: 27px;
     margin-top: 15px; }
 
   .container {
-    width: 280px;
+    width: 100%;
+    max-width: none;
     margin: 0 auto; }
 
   .score-container, .best-container {
@@ -580,9 +582,9 @@ hr {
     margin-top: 2px; }
 
   .game-container {
-    margin-top: 17px;
+    margin-top: 10px;
     position: relative;
-    padding: 10px;
+    padding: 6px;
     cursor: default;
     -webkit-touch-callout: none;
     -ms-touch-callout: none;
@@ -593,8 +595,17 @@ hr {
     touch-action: none;
     background: #81c784;
     border-radius: 6px;
-    width: 280px;
-    height: 280px;
+    --board: min(100vw - 12px, 520px);
+    --pad: 6px;
+    --tile-gap: 4px;
+    --tile-size: calc((var(--board) - (2 * var(--pad)) - (3 * var(--tile-gap))) / 4);
+    --tile-step: calc(var(--tile-size) + var(--tile-gap));
+    width: var(--board);
+    height: var(--board);
+    padding: var(--pad);
+    margin-top: 10px;
+    max-width: none;
+    aspect-ratio: 1 / 1;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
@@ -643,12 +654,17 @@ hr {
       .game-container .game-message.game-won, .game-container .game-message.game-over {
         display: block; }
 
+  .grid-container,
+  .tile-container {
+    width: calc(100% - (2 * var(--pad)));
+    height: calc(100% - (2 * var(--pad))); }
+
   .grid-container {
     position: absolute;
     z-index: 1; }
 
   .grid-row {
-    margin-bottom: 10px; }
+    margin-bottom: var(--tile-gap); }
     .grid-row:last-child {
       margin-bottom: 0; }
     .grid-row:after {
@@ -657,9 +673,9 @@ hr {
       clear: both; }
 
   .grid-cell {
-    width: 57.5px;
-    height: 57.5px;
-    margin-right: 10px;
+    width: var(--tile-size);
+    height: var(--tile-size);
+    margin-right: var(--tile-gap);
     float: left;
     border-radius: 3px;
     background: rgba(200, 230, 201, 0.35); }
@@ -671,92 +687,92 @@ hr {
     z-index: 2; }
 
   .tile, .tile .tile-inner {
-    width: 58px;
-    height: 58px;
-    line-height: 58px; }
+    width: var(--tile-size);
+    height: var(--tile-size);
+    line-height: var(--tile-size); }
   .tile.tile-position-1-1 {
-    -webkit-transform: translate(0px, 0px);
-    -moz-transform: translate(0px, 0px);
-    -ms-transform: translate(0px, 0px);
-    transform: translate(0px, 0px); }
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0); }
   .tile.tile-position-1-2 {
-    -webkit-transform: translate(0px, 67px);
-    -moz-transform: translate(0px, 67px);
-    -ms-transform: translate(0px, 67px);
-    transform: translate(0px, 67px); }
+    -webkit-transform: translate(0, var(--tile-step));
+    -moz-transform: translate(0, var(--tile-step));
+    -ms-transform: translate(0, var(--tile-step));
+    transform: translate(0, var(--tile-step)); }
   .tile.tile-position-1-3 {
-    -webkit-transform: translate(0px, 135px);
-    -moz-transform: translate(0px, 135px);
-    -ms-transform: translate(0px, 135px);
-    transform: translate(0px, 135px); }
+    -webkit-transform: translate(0, calc(var(--tile-step) * 2));
+    -moz-transform: translate(0, calc(var(--tile-step) * 2));
+    -ms-transform: translate(0, calc(var(--tile-step) * 2));
+    transform: translate(0, calc(var(--tile-step) * 2)); }
   .tile.tile-position-1-4 {
-    -webkit-transform: translate(0px, 202px);
-    -moz-transform: translate(0px, 202px);
-    -ms-transform: translate(0px, 202px);
-    transform: translate(0px, 202px); }
+    -webkit-transform: translate(0, calc(var(--tile-step) * 3));
+    -moz-transform: translate(0, calc(var(--tile-step) * 3));
+    -ms-transform: translate(0, calc(var(--tile-step) * 3));
+    transform: translate(0, calc(var(--tile-step) * 3)); }
   .tile.tile-position-2-1 {
-    -webkit-transform: translate(67px, 0px);
-    -moz-transform: translate(67px, 0px);
-    -ms-transform: translate(67px, 0px);
-    transform: translate(67px, 0px); }
+    -webkit-transform: translate(var(--tile-step), 0);
+    -moz-transform: translate(var(--tile-step), 0);
+    -ms-transform: translate(var(--tile-step), 0);
+    transform: translate(var(--tile-step), 0); }
   .tile.tile-position-2-2 {
-    -webkit-transform: translate(67px, 67px);
-    -moz-transform: translate(67px, 67px);
-    -ms-transform: translate(67px, 67px);
-    transform: translate(67px, 67px); }
+    -webkit-transform: translate(var(--tile-step), var(--tile-step));
+    -moz-transform: translate(var(--tile-step), var(--tile-step));
+    -ms-transform: translate(var(--tile-step), var(--tile-step));
+    transform: translate(var(--tile-step), var(--tile-step)); }
   .tile.tile-position-2-3 {
-    -webkit-transform: translate(67px, 135px);
-    -moz-transform: translate(67px, 135px);
-    -ms-transform: translate(67px, 135px);
-    transform: translate(67px, 135px); }
+    -webkit-transform: translate(var(--tile-step), calc(var(--tile-step) * 2));
+    -moz-transform: translate(var(--tile-step), calc(var(--tile-step) * 2));
+    -ms-transform: translate(var(--tile-step), calc(var(--tile-step) * 2));
+    transform: translate(var(--tile-step), calc(var(--tile-step) * 2)); }
   .tile.tile-position-2-4 {
-    -webkit-transform: translate(67px, 202px);
-    -moz-transform: translate(67px, 202px);
-    -ms-transform: translate(67px, 202px);
-    transform: translate(67px, 202px); }
+    -webkit-transform: translate(var(--tile-step), calc(var(--tile-step) * 3));
+    -moz-transform: translate(var(--tile-step), calc(var(--tile-step) * 3));
+    -ms-transform: translate(var(--tile-step), calc(var(--tile-step) * 3));
+    transform: translate(var(--tile-step), calc(var(--tile-step) * 3)); }
   .tile.tile-position-3-1 {
-    -webkit-transform: translate(135px, 0px);
-    -moz-transform: translate(135px, 0px);
-    -ms-transform: translate(135px, 0px);
-    transform: translate(135px, 0px); }
+    -webkit-transform: translate(calc(var(--tile-step) * 2), 0);
+    -moz-transform: translate(calc(var(--tile-step) * 2), 0);
+    -ms-transform: translate(calc(var(--tile-step) * 2), 0);
+    transform: translate(calc(var(--tile-step) * 2), 0); }
   .tile.tile-position-3-2 {
-    -webkit-transform: translate(135px, 67px);
-    -moz-transform: translate(135px, 67px);
-    -ms-transform: translate(135px, 67px);
-    transform: translate(135px, 67px); }
+    -webkit-transform: translate(calc(var(--tile-step) * 2), var(--tile-step));
+    -moz-transform: translate(calc(var(--tile-step) * 2), var(--tile-step));
+    -ms-transform: translate(calc(var(--tile-step) * 2), var(--tile-step));
+    transform: translate(calc(var(--tile-step) * 2), var(--tile-step)); }
   .tile.tile-position-3-3 {
-    -webkit-transform: translate(135px, 135px);
-    -moz-transform: translate(135px, 135px);
-    -ms-transform: translate(135px, 135px);
-    transform: translate(135px, 135px); }
+    -webkit-transform: translate(calc(var(--tile-step) * 2), calc(var(--tile-step) * 2));
+    -moz-transform: translate(calc(var(--tile-step) * 2), calc(var(--tile-step) * 2));
+    -ms-transform: translate(calc(var(--tile-step) * 2), calc(var(--tile-step) * 2));
+    transform: translate(calc(var(--tile-step) * 2), calc(var(--tile-step) * 2)); }
   .tile.tile-position-3-4 {
-    -webkit-transform: translate(135px, 202px);
-    -moz-transform: translate(135px, 202px);
-    -ms-transform: translate(135px, 202px);
-    transform: translate(135px, 202px); }
+    -webkit-transform: translate(calc(var(--tile-step) * 2), calc(var(--tile-step) * 3));
+    -moz-transform: translate(calc(var(--tile-step) * 2), calc(var(--tile-step) * 3));
+    -ms-transform: translate(calc(var(--tile-step) * 2), calc(var(--tile-step) * 3));
+    transform: translate(calc(var(--tile-step) * 2), calc(var(--tile-step) * 3)); }
   .tile.tile-position-4-1 {
-    -webkit-transform: translate(202px, 0px);
-    -moz-transform: translate(202px, 0px);
-    -ms-transform: translate(202px, 0px);
-    transform: translate(202px, 0px); }
+    -webkit-transform: translate(calc(var(--tile-step) * 3), 0);
+    -moz-transform: translate(calc(var(--tile-step) * 3), 0);
+    -ms-transform: translate(calc(var(--tile-step) * 3), 0);
+    transform: translate(calc(var(--tile-step) * 3), 0); }
   .tile.tile-position-4-2 {
-    -webkit-transform: translate(202px, 67px);
-    -moz-transform: translate(202px, 67px);
-    -ms-transform: translate(202px, 67px);
-    transform: translate(202px, 67px); }
+    -webkit-transform: translate(calc(var(--tile-step) * 3), var(--tile-step));
+    -moz-transform: translate(calc(var(--tile-step) * 3), var(--tile-step));
+    -ms-transform: translate(calc(var(--tile-step) * 3), var(--tile-step));
+    transform: translate(calc(var(--tile-step) * 3), var(--tile-step)); }
   .tile.tile-position-4-3 {
-    -webkit-transform: translate(202px, 135px);
-    -moz-transform: translate(202px, 135px);
-    -ms-transform: translate(202px, 135px);
-    transform: translate(202px, 135px); }
+    -webkit-transform: translate(calc(var(--tile-step) * 3), calc(var(--tile-step) * 2));
+    -moz-transform: translate(calc(var(--tile-step) * 3), calc(var(--tile-step) * 2));
+    -ms-transform: translate(calc(var(--tile-step) * 3), calc(var(--tile-step) * 2));
+    transform: translate(calc(var(--tile-step) * 3), calc(var(--tile-step) * 2)); }
   .tile.tile-position-4-4 {
-    -webkit-transform: translate(202px, 202px);
-    -moz-transform: translate(202px, 202px);
-    -ms-transform: translate(202px, 202px);
-    transform: translate(202px, 202px); }
+    -webkit-transform: translate(calc(var(--tile-step) * 3), calc(var(--tile-step) * 3));
+    -moz-transform: translate(calc(var(--tile-step) * 3), calc(var(--tile-step) * 3));
+    -ms-transform: translate(calc(var(--tile-step) * 3), calc(var(--tile-step) * 3));
+    transform: translate(calc(var(--tile-step) * 3), calc(var(--tile-step) * 3)); }
 
   .tile .tile-inner {
-    font-size: 35px;
+    font-size: 38px;
     display: flex;
     align-items: center;
     justify-content: center; }

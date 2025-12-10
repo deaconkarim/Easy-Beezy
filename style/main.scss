@@ -7,7 +7,7 @@ $grid-row-cells: 4;
 $tile-size: ($field-width - $grid-spacing * ($grid-row-cells + 1)) / $grid-row-cells;
 $tile-border-radius: 3px;
 
-$mobile-threshold: $field-width + 20px;
+$mobile-threshold: 900px;
 
 $text-color: #2d5016;
 $bright-text-color: #f0f9f4;
@@ -181,6 +181,7 @@ hr {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    user-select: none;
 
     -ms-touch-action: none;
     touch-action: none;
@@ -486,6 +487,7 @@ hr {
 
 @include smaller($mobile-threshold) {
   // Redefine variables for smaller screens
+  // Fill the viewport (body already has 20px side padding)
   $field-width: 280px;
   $grid-spacing: 10px;
   $grid-row-cells: 4;
@@ -498,8 +500,8 @@ hr {
   }
 
   body {
-    margin: 20px 0;
-    padding: 0 20px;
+    margin: 12px 0;
+    padding: 0 8px;
   }
 
   h1.title {
@@ -508,7 +510,8 @@ hr {
   }
 
   .container {
-    width: $field-width;
+    width: 100%;
+    max-width: none;
     margin: 0 auto;
   }
 
@@ -541,9 +544,78 @@ hr {
   // Render the game field at the right width
   @include game-field;
 
+  // Full-width mobile overrides using CSS variables so the board scales to the viewport
+  .game-container {
+    --board: min(100vw - 12px, 520px);
+    --pad: 6px;
+    --tile-gap: 4px;
+    // subtract padding to avoid overflow
+    --tile-size: calc((var(--board) - (2 * var(--pad)) - (3 * var(--tile-gap))) / 4);
+    --tile-step: calc(var(--tile-size) + var(--tile-gap));
+
+    width: var(--board);
+    height: var(--board);
+    padding: var(--pad);
+    margin-top: 10px;
+    max-width: none;
+    aspect-ratio: 1 / 1;
+  }
+
+  .grid-container,
+  .tile-container {
+    width: calc(100% - (2 * var(--pad)));
+    height: calc(100% - (2 * var(--pad)));
+  }
+
+  .grid-row {
+    margin-bottom: var(--tile-gap);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .grid-cell {
+    width: var(--tile-size);
+    height: var(--tile-size);
+    margin-right: var(--tile-gap);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .tile {
+    &, .tile-inner {
+      width: var(--tile-size);
+      height: var(--tile-size);
+      line-height: var(--tile-size);
+    }
+
+    &.tile-position-1-1 { @include transform(translate(0, 0)); }
+    &.tile-position-1-2 { @include transform(translate(0, var(--tile-step))); }
+    &.tile-position-1-3 { @include transform(translate(0, calc(var(--tile-step) * 2))); }
+    &.tile-position-1-4 { @include transform(translate(0, calc(var(--tile-step) * 3))); }
+
+    &.tile-position-2-1 { @include transform(translate(var(--tile-step), 0)); }
+    &.tile-position-2-2 { @include transform(translate(var(--tile-step), var(--tile-step))); }
+    &.tile-position-2-3 { @include transform(translate(var(--tile-step), calc(var(--tile-step) * 2))); }
+    &.tile-position-2-4 { @include transform(translate(var(--tile-step), calc(var(--tile-step) * 3))); }
+
+    &.tile-position-3-1 { @include transform(translate(calc(var(--tile-step) * 2), 0)); }
+    &.tile-position-3-2 { @include transform(translate(calc(var(--tile-step) * 2), var(--tile-step))); }
+    &.tile-position-3-3 { @include transform(translate(calc(var(--tile-step) * 2), calc(var(--tile-step) * 2))); }
+    &.tile-position-3-4 { @include transform(translate(calc(var(--tile-step) * 2), calc(var(--tile-step) * 3))); }
+
+    &.tile-position-4-1 { @include transform(translate(calc(var(--tile-step) * 3), 0)); }
+    &.tile-position-4-2 { @include transform(translate(calc(var(--tile-step) * 3), var(--tile-step))); }
+    &.tile-position-4-3 { @include transform(translate(calc(var(--tile-step) * 3), calc(var(--tile-step) * 2))); }
+    &.tile-position-4-4 { @include transform(translate(calc(var(--tile-step) * 3), calc(var(--tile-step) * 3))); }
+  }
+
   // Rest of the font-size adjustments in the tile class
   .tile .tile-inner {
-    font-size: 35px;
+    font-size: 38px;
   }
 
   .game-message {
