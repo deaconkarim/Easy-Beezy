@@ -66,7 +66,9 @@ HTMLActuator.prototype.addTile = function (tile) {
   
   // Use image instead of text
   var img = document.createElement("img");
-  img.src = "images/tiles/" + tile.value + ".png";
+  // Allow remapping of images without changing numeric value
+  var imgValue = (window.tileImageMap && window.tileImageMap[tile.value]) || tile.value;
+  img.src = "images/tiles/" + imgValue + ".png";
   img.alt = tile.value;
   img.classList.add("tile-image");
   

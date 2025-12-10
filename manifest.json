@@ -1,0 +1,27 @@
+{
+  "name": "Bezzy's Babies",
+  "short_name": "Bezzy",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#e8f5e9",
+  "theme_color": "#81c784",
+  "icons": [
+    {
+      "src": "meta/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "images/tiles/256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

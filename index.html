@@ -11,6 +11,9 @@
   <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x920.png"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone, retina -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="theme-color" content="#81c784">
+
+  <link rel="manifest" href="manifest.json">
 
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
@@ -72,8 +75,23 @@
       </div>
     </div>
 
+    <details class="tile-order-card" open>
+      <summary>Tile order (low to high)</summary>
+      <div class="tile-order-body">
+        <p class="tile-order-description">
+          View the sequence of tiles from the starting baby up to the biggest merge. Shuffle to see a random order.
+        </p>
+        <div class="tile-order-actions">
+          <button id="tile-order-shuffle" type="button">Shuffle order</button>
+          <button id="tile-order-restore" type="button">Restore order</button>
+          <span id="tile-order-label" class="tile-order-label"></span>
+        </div>
+        <ul id="tile-order-list" class="tile-order-list" aria-live="polite"></ul>
+      </div>
+    </details>
+
     <p class="game-explanation">
-      <strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two babies with the same face touch, they <strong>merge into the next baby!</strong>
+      <strong class="important">How to play:</strong> Swipe to move the tiles. When two babies with the same face touch, they <strong>merge into the next baby!</strong>
     </p>
     <hr>
     <p>
@@ -89,6 +107,8 @@
   <script src="js/tile.js"></script>
   <script src="js/local_storage_manager.js"></script>
   <script src="js/game_manager.js"></script>
+  <script src="js/tile_order.js"></script>
+  <script src="js/pwa.js"></script>
   <script src="js/application.js"></script>
 </body>
 </html>

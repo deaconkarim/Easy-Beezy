@@ -543,6 +543,107 @@ hr {
 .game-explanation {
   margin-top: 50px; }
 
+.tile-order-card {
+  margin-top: 24px;
+  background: #dcedc8;
+  border: 1px solid #c7e3c1;
+  border-radius: 6px;
+  padding: 12px 14px; }
+  .tile-order-card summary {
+    cursor: pointer;
+    font-weight: bold;
+    outline: none; }
+  .tile-order-card .tile-order-body {
+    margin-top: 10px; }
+  .tile-order-card .tile-order-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px; }
+  .tile-order-card #tile-order-shuffle,
+  .tile-order-card #tile-order-restore {
+    display: inline-block;
+    background: #4f8b5f;
+    border-radius: 3px;
+    padding: 0 14px;
+    text-decoration: none;
+    color: #f0f9f4;
+    height: 36px;
+    line-height: 36px;
+    border: 0;
+    font-size: 14px; }
+  .tile-order-card .tile-order-label {
+    font-size: 14px;
+    color: #2d5016; }
+  .tile-order-card .tile-order-list {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; }
+  .tile-order-card .tile-order-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: #81c784;
+    color: #f0f9f4;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35); }
+    .tile-order-card .tile-order-chip img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      display: block; }
+
+.install-banner {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 1000;
+  background: #f0f9f4;
+  border: 1px solid #c7e3c1;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 12px; }
+  .install-banner .install-banner__content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap; }
+  .install-banner .install-banner__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px; }
+    .install-banner .install-banner__text strong {
+      font-size: 15px;
+      color: #2d5016; }
+    .install-banner .install-banner__text span {
+      font-size: 13px;
+      color: #234012; }
+  .install-banner .install-banner__actions {
+    display: flex;
+    gap: 8px;
+    margin-left: auto; }
+  .install-banner .install-banner__button {
+    display: inline-block;
+    background: #4f8b5f;
+    border-radius: 3px;
+    padding: 0 12px;
+    text-decoration: none;
+    color: #f0f9f4;
+    height: 34px;
+    line-height: 34px;
+    border: 0;
+    font-size: 13px;
+    cursor: pointer; }
+    .install-banner .install-banner__button--ghost {
+      background: transparent;
+      color: #2d5016;
+      box-shadow: inset 0 0 0 1px #c7e3c1; }
+
 @media screen and (max-width: 520px) {
   html, body {
     font-size: 15px; }
@@ -580,6 +681,16 @@ hr {
     display: block;
     box-sizing: border-box;
     margin-top: 2px; }
+
+  .tile-order-card {
+    padding: 10px 12px; }
+    .tile-order-card #tile-order-shuffle {
+      width: 100%;
+      max-width: 180px; }
+    .tile-order-card .tile-order-label {
+      display: block; }
+    .tile-order-card .tile-order-actions {
+      align-items: flex-start; }
 
   .game-container {
     margin-top: 10px;
