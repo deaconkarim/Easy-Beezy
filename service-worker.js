@@ -14,6 +14,7 @@ const ASSETS = [
   "./js/local_storage_manager.js",
   "./js/tile.js",
   "./js/tile_order.js",
+  "./js/howto.js",
   "./js/pwa.js",
   "./images/tiles/2.png",
   "./images/tiles/4.png",

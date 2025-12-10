@@ -610,6 +610,73 @@ hr {
   }
 }
 
+.howto-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 1200;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  &.hidden {
+    display: none;
+  }
+
+  .howto-card {
+    background: #f0f9f4;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 420px;
+    width: min(420px, calc(100vw - 40px));
+    margin: 0 auto;
+    box-sizing: border-box;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+    border: 1px solid lighten($text-color, 55%);
+  }
+
+  h2 {
+    margin: 0 0 12px;
+  }
+
+  .howto-steps {
+    margin: 0 0 16px 18px;
+    padding: 0;
+    line-height: 1.5;
+  }
+
+  .howto-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .howto-primary,
+  .howto-secondary {
+    @include button;
+    border: 0;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 16px;
+    cursor: pointer;
+  }
+
+  .howto-secondary {
+    background: transparent;
+    color: $text-color;
+    box-shadow: inset 0 0 0 1px lighten($text-color, 50%);
+  }
+}
+
+body.howto-open {
+  overflow: hidden;
+}
+
 @include smaller($mobile-threshold) {
   // Redefine variables for smaller screens
   // Fill the viewport (body already has 20px side padding)
