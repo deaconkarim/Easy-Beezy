@@ -20,7 +20,7 @@ GameManager.prototype.restart = function () {
   this.setup();
 };
 
-// Keep playing after winning (allows going over Bezzy's Babies)
+// Keep playing after winning (allows going over Beezy's Babies)
 GameManager.prototype.keepPlaying = function () {
   this.keepPlaying = true;
   this.actuator.continueGame(); // Clear the game won/lost message
@@ -166,7 +166,7 @@ GameManager.prototype.move = function (direction) {
           // Update the score
           self.score += merged.value;
 
-          // The mighty Bezzy's Babies tile
+          // The mighty Beezy's Babies tile
           if (merged.value === 2048) self.won = true;
         } else {
           self.moveTile(tile, positions.farthest);

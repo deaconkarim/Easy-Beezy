@@ -19,7 +19,7 @@
     banner.innerHTML = `
       <div class="install-banner__content">
         <div class="install-banner__text">
-          <strong>Add Bezzy's Babies?</strong>
+          <strong>Add Beezy's Babies?</strong>
           <span>Install the app for quicker access and offline play.</span>
         </div>
         <div class="install-banner__actions">
