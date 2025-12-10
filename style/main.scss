@@ -9,15 +9,15 @@ $tile-border-radius: 3px;
 
 $mobile-threshold: $field-width + 20px;
 
-$text-color: #776E65;
-$bright-text-color: #f9f6f2;
+$text-color: #2d5016;
+$bright-text-color: #f0f9f4;
 
-$tile-color: #eee4da;
-$tile-gold-color: #edc22e;
+$tile-color: #c8e6c9;
+$tile-gold-color: #4caf50;
 $tile-gold-glow-color: lighten($tile-gold-color, 15%);
 
 $game-container-margin-top: 40px;
-$game-container-background: #bbada0;
+$game-container-background: #81c784;
 
 $transition-speed: 100ms;
 
@@ -25,7 +25,7 @@ html, body {
   margin: 0;
   padding: 0;
 
-  background: #faf8ef;
+  background: #e8f5e9;
   color: $text-color;
   font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 18px;
@@ -323,6 +323,18 @@ hr {
     z-index: 10;
 
     font-size: 55px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .tile-image {
+      max-width: 90%;
+      max-height: 90%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
   }
 
   // Movement transition
@@ -338,10 +350,10 @@ hr {
   // Colors for all 11 states, false = no special color
   $special-colors: false false, // 2
                    false false, // 4
-                   #f78e48 true, // 8
-                   #fc5e2e true, // 16
-                   #ff3333 true, // 32
-                   #ff0000 true, // 64
+                   #66bb6a true, // 8
+                   #4caf50 true, // 16
+                   #43a047 true, // 32
+                   #388e3c true, // 64
                    false true, // 128
                    false true, // 256
                    false true, // 512
@@ -401,10 +413,10 @@ hr {
     $exponent: $exponent + 1;
   }
 
-  // Super tiles (above 2048)
+  // Super tiles (above Bezzy's Babies)
   &.tile-super .tile-inner {
     color: $bright-text-color;
-    background: mix(#333, $tile-gold-color, 95%);
+    background: mix(#1b5e20, $tile-gold-color, 85%);
 
     font-size: 30px;
 
