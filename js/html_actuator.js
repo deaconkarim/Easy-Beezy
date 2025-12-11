@@ -16,6 +16,7 @@ function HTMLActuator() {
   this.lastMaxTile      = 0;
   this.firstMergeDone   = false;
   this.earlyBurst       = 0;
+  this.lastReaction     = null;
   this.introText        = (document.querySelector(".game-intro") && document.querySelector(".game-intro").textContent.trim()) || "Join the babies!";
 
   // Set initial face/text
@@ -203,33 +204,80 @@ HTMLActuator.prototype.updateReaction = function (maxTile, emptyCells, scoreDelt
   // Mark first merge
   if (scoreDelta > 0) {
     this.firstMergeDone = true;
-    this.earlyBurst = Math.max(this.earlyBurst, 3); // ensure several early reactions
+    this.earlyBurst = Math.max(this.earlyBurst, 4); // ensure several early reactions
+  }
+
+  var self = this;
+  function pickVariant(pool) {
+    if (!pool || !pool.length) return null;
+    var attempt = 0;
+    while (attempt < 5) {
+      var choice = pool[Math.floor(Math.random() * pool.length)];
+      var sig = choice.face + "|" + choice.text;
+      if (!self.lastReaction || self.lastReaction !== sig) {
+        return choice;
+      }
+      attempt += 1;
+    }
+    return pool[0];
   }
 
   if (metadata.over) {
-    faceKey = "sad";
-    text = "Trapped!";
+    var losePick = pickVariant([
+      { face: "sad", text: "Trapped!" },
+      { face: "tight", text: "Beezy is bummed." },
+      { face: "cool", text: "Try again?" }
+    ]);
+    faceKey = losePick.face; text = losePick.text;
   } else if (metadata.won || maxTile >= 4096) {
-    faceKey = "star";
-    text = "Legend Beezy!";
+    var winPick = pickVariant([
+      { face: "star", text: "Legend Beezy!" },
+      { face: "party", text: "Beezy is ecstatic!" },
+      { face: "cool", text: "You nailed it!" }
+    ]);
+    faceKey = winPick.face; text = winPick.text;
   } else if (newMax && maxTile >= 1024) {
-    faceKey = "star";
-    text = "New level!";
+    var nm = pickVariant([
+      { face: "star", text: "New level!" },
+      { face: "cool", text: "Level up!" },
+      { face: "party", text: "That popped!" }
+    ]);
+    faceKey = nm.face; text = nm.text;
   } else if (hugeMerge) {
-    faceKey = "party";
-    text = "Massive merge!";
+    var hm = pickVariant([
+      { face: "party", text: "Massive merge!" },
+      { face: "star", text: "Beezy fireworks!" },
+      { face: "cool", text: "Crushed it!" }
+    ]);
+    faceKey = hm.face; text = hm.text;
   } else if (comeback) {
-    faceKey = "cool";
-    text = "Clutched space!";
-  } else if (emptyCells <= 1) {
-    faceKey = "tight";
-    text = "Tight corner!";
+    var cb = pickVariant([
+      { face: "cool", text: "Clutched space!" },
+      { face: "party", text: "Beezy loves comebacks!" },
+      { face: "star", text: "From the brink!" }
+    ]);
+    faceKey = cb.face; text = cb.text;
+  } else if (danger) {
+    var dn = pickVariant([
+      { face: "tight", text: "Tight corner!" },
+      { face: "tight", text: "One move left?" },
+      { face: "cool", text: "Find an opening!" }
+    ]);
+    faceKey = dn.face; text = dn.text;
   } else if (bigMerge) {
-    faceKey = "party";
-    text = "What a comeback!";
+    var bm = pickVariant([
+      { face: "party", text: "What a comeback!" },
+      { face: "smile", text: "Beezy approves!" },
+      { face: "cool", text: "Strong merge!" }
+    ]);
+    faceKey = bm.face; text = bm.text;
   } else if (maxTile >= 1024) {
-    faceKey = "cool";
-    text = "On a roll!";
+    var orl = pickVariant([
+      { face: "cool", text: "On a roll!" },
+      { face: "smile", text: "Keep building!" },
+      { face: "star", text: "Momentum!" }
+    ]);
+    faceKey = orl.face; text = orl.text;
   } else if (scoreDelta > 0) {
     // Early-game richer rotation
     var earlyPhrases = [
@@ -237,19 +285,23 @@ HTMLActuator.prototype.updateReaction = function (maxTile, emptyCells, scoreDelt
       { face: "cool", text: "Fresh start!" },
       { face: "star", text: "Bright spark!" },
       { face: "party", text: "Tiny celebration!" },
-      { face: "tight", text: "Keep space open." }
+      { face: "tight", text: "Keep space open." },
+      { face: "smile", text: "Off to a good start!" }
     ];
     var phrases = [
       { face: "smile", text: "Smooth slide!" },
       { face: "cool", text: "Keep that flow." },
       { face: "smile", text: "Clean merge!" },
       { face: "tight", text: "Watch your space." },
-      { face: "party", text: "Little win!" }
+      { face: "party", text: "Little win!" },
+      { face: "cool", text: "Still steady." },
+      { face: "smile", text: "Beezy\u2019s amused." },
+      { face: "tight", text: "Stay mindful." }
     ];
     var pool = (this.earlyBurst > 0 ? earlyPhrases : phrases);
-    var chance = (this.earlyBurst > 0 ? 0.9 : 0.35);
+    var chance = (this.earlyBurst > 0 ? 0.9 : 0.45);
     if (Math.random() < chance) {
-      var pick = pool[Math.floor(Math.random() * pool.length)];
+      var pick = pickVariant(pool);
       faceKey = pick.face;
       text = pick.text;
       if (this.earlyBurst > 0) this.earlyBurst -= 1;
@@ -260,8 +312,12 @@ HTMLActuator.prototype.updateReaction = function (maxTile, emptyCells, scoreDelt
     // Before first merge, keep intro text and do not overwrite
     return;
   } else if (lowSpace) {
-    faceKey = "tight";
-    text = "Space is tight.";
+    var ls = pickVariant([
+      { face: "tight", text: "Space is tight." },
+      { face: "tight", text: "Careful now." },
+      { face: "cool", text: "Think ahead." }
+    ]);
+    faceKey = ls.face; text = ls.text;
   }
 
   if (text === null || faceKey === null) {
@@ -277,6 +333,7 @@ HTMLActuator.prototype.updateReaction = function (maxTile, emptyCells, scoreDelt
 
   this.lastEmptyCells = emptyCells;
   this.lastMaxTile = maxTile;
+  this.lastReaction = faceKey + "|" + text;
 };
 
 HTMLActuator.prototype.setReactionFace = function (key) {
