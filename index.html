@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="theme-color" content="#81c784">
+  <meta name="theme-color" content="#0f172a">
 
   <link rel="manifest" href="manifest.json">
 
@@ -18,60 +18,136 @@
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
 <body>
-  <div class="container">
-    <div class="heading">
+  <div class="app-shell">
+    <header class="hero">
+      <span class="hero-pill">Bloom build / concept UI</span>
       <h1 class="title">Beezy's Babies</h1>
-      <div class="scores-container">
-        <div class="score-container">0</div>
-        <div class="best-container">0</div>
+      <p class="hero-subtitle">
+        Slide Beezy's crew across a luminous holo-grid, fuse matching faces, and chase the exact moment the hive erupts into a happy buzz.
+      </p>
+      <div class="hero-actions">
+        <button type="button" class="ghost-button" data-open-howto>How to play</button>
+        <a class="hero-primary" href="#playfield">Jump to playfield</a>
       </div>
-    </div>
+    </header>
 
-    <div class="above-game">
-      <p class="game-intro">Join the babies to make <strong>Beezy Happy!</strong></p>
-      <a class="restart-button">New Game</a>
-    </div>
+    <main class="game-layout" id="playfield">
+      <section class="board-panel glass-card">
+        <div class="board-header">
+          <div class="board-heading">
+            <p class="eyebrow">Reactive grid / 4 x 4</p>
+            <h2>Live playfield</h2>
+            <p class="board-subtitle">Keep the energy flowing by chaining merges near the glowing corners.</p>
+          </div>
+          <div class="scores-container stacked">
+            <div class="score-container">0</div>
+            <div class="best-container">0</div>
+          </div>
+        </div>
 
-    <div class="game-container">
-      <div class="game-message">
-        <p></p>
-        <div class="lower">
-	        <a class="keep-playing-button">Keep going</a>
-          <a class="retry-button">Try again</a>
+        <div class="board-metrics">
+          <div class="metric-badge">
+            <span>Season goal</span>
+            <strong>Happy Beezy</strong>
+          </div>
+          <div class="metric-badge">
+            <span>Mode</span>
+            <strong>Endless bloom</strong>
+          </div>
+          <div class="metric-badge">
+            <span>Vibe</span>
+            <strong>Neon garden</strong>
+          </div>
         </div>
-      </div>
 
-      <div class="grid-container">
-        <div class="grid-row">
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
+        <div class="above-game board-controls">
+          <p class="game-intro">Join the babies to make <strong>Beezy Happy!</strong></p>
+          <button type="button" class="restart-button">Start a new run</button>
         </div>
-        <div class="grid-row">
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-        </div>
-        <div class="grid-row">
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-        </div>
-        <div class="grid-row">
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-          <div class="grid-cell"></div>
-        </div>
-      </div>
 
-      <div class="tile-container">
+        <div class="game-container">
+          <div class="game-message">
+            <p></p>
+            <div class="lower">
+              <a class="keep-playing-button">Keep going</a>
+              <a class="retry-button">Try again</a>
+            </div>
+          </div>
 
-      </div>
-    </div>
+          <div class="grid-container">
+            <div class="grid-row">
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+            </div>
+            <div class="grid-row">
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+            </div>
+            <div class="grid-row">
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+            </div>
+            <div class="grid-row">
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+              <div class="grid-cell"></div>
+            </div>
+          </div>
+
+          <div class="tile-container"></div>
+        </div>
+
+        <p class="game-explanation">
+          <strong class="important">Pulse check:</strong> Swipe (or tap arrow keys) to slide the board. Matching babies merge upward through the aura until you hatch a <strong>Happy Beezy</strong>.
+        </p>
+      </section>
+
+      <aside class="info-panel glass-card">
+        <div class="info-card hero-card">
+          <p class="eyebrow">Mission briefing</p>
+          <h3>Keep Beezy's garden glowing</h3>
+          <p>
+            Stack identical babies to generate warmth. Chain merges toward the corners, pace your swipes, and let Beezy bask in the neon bloom.
+          </p>
+          <ul class="tip-list">
+            <li>Lock your highest tile into a corner "nest".</li>
+            <li>Breathe between swipes - slow drifts prevent chaos cascades.</li>
+            <li>Remix the portraits via the tile order controls below.</li>
+          </ul>
+        </div>
+
+        <div class="info-card tile-order-wrapper">
+          <details class="tile-order-card" open>
+            <summary>Tile order (low to high)</summary>
+            <div class="tile-order-body">
+              <p class="tile-order-description">
+                View the sequence from the starting baby to Beezy. Shuffle to remix the artwork without affecting gameplay.
+              </p>
+              <div class="tile-order-actions">
+                <button id="tile-order-shuffle" type="button">Shuffle order</button>
+                <button id="tile-order-restore" type="button">Restore order</button>
+                <span id="tile-order-label" class="tile-order-label"></span>
+              </div>
+              <ul id="tile-order-list" class="tile-order-list" aria-live="polite"></ul>
+            </div>
+          </details>
+        </div>
+
+        <div class="info-card compact">
+          <h3>Need a refresher?</h3>
+          <p>Launch the interactive overlay for a quick rules recap.</p>
+          <button class="ghost-button ghost-button--full" type="button" data-open-howto>Open overlay</button>
+        </div>
+      </aside>
+    </main>
+  </div>
 
   <div class="howto-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="howto-title">
     <div class="howto-card">
@@ -82,32 +158,10 @@
         <li>Keep merging to get to a <strong>Happy Beezy!</strong></li>
       </ol>
       <div class="howto-actions">
-        <button class="howto-primary" id="howto-start">Got it</button>
+        <button class="howto-secondary" id="howto-skip" type="button">Maybe later</button>
+        <button class="howto-primary" id="howto-start" type="button">Let's go</button>
       </div>
     </div>
-  </div>
-
-    <details class="tile-order-card">
-      <summary>Tile order (low to high)</summary>
-      <div class="tile-order-body">
-        <p class="tile-order-description">
-          View the sequence of tiles from the starting baby up to the biggest merge. Shuffle to see a random order.
-        </p>
-        <div class="tile-order-actions">
-          <button id="tile-order-shuffle" type="button">Shuffle order</button>
-          <button id="tile-order-restore" type="button">Restore order</button>
-          <span id="tile-order-label" class="tile-order-label"></span>
-        </div>
-        <ul id="tile-order-list" class="tile-order-list" aria-live="polite"></ul>
-      </div>
-    </details>
-
-    <p class="game-explanation">
-      <strong class="important">How to play:</strong> Swipe to move the tiles. When two babies with the same face touch, they <strong>merge into the next baby!</strong>
-    </p>
-    <hr>
-    <p>
-    </p>
   </div>
 
   <script src="js/bind_polyfill.js"></script>

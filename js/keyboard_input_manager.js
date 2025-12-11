@@ -138,7 +138,15 @@ KeyboardInputManager.prototype.keepPlaying = function (event) {
 };
 
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
-  var button = document.querySelector(selector);
-  button.addEventListener("click", fn.bind(this));
-  button.addEventListener(this.eventTouchend, fn.bind(this));
+  var self = this;
+  var buttons = document.querySelectorAll(selector);
+
+  if (!buttons.length) {
+    return;
+  }
+
+  Array.prototype.forEach.call(buttons, function (button) {
+    button.addEventListener("click", fn.bind(self));
+    button.addEventListener(self.eventTouchend, fn.bind(self));
+  });
 };

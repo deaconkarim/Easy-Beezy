@@ -5,19 +5,19 @@ $field-width: 500px;
 $grid-spacing: 15px;
 $grid-row-cells: 4;
 $tile-size: ($field-width - $grid-spacing * ($grid-row-cells + 1)) / $grid-row-cells;
-$tile-border-radius: 3px;
+$tile-border-radius: 8px;
 
 $mobile-threshold: 900px;
 
-$text-color: #2d5016;
-$bright-text-color: #f0f9f4;
+$text-color: #cfe7ff;
+$bright-text-color: #ffffff;
 
-$tile-color: #c8e6c9;
-$tile-gold-color: #4caf50;
-$tile-gold-glow-color: lighten($tile-gold-color, 15%);
+$tile-color: #14213d;
+$tile-gold-color: #f97316;
+$tile-gold-glow-color: lighten($tile-gold-color, 18%);
 
 $game-container-margin-top: 40px;
-$game-container-background: #81c784;
+$game-container-background: #14233f;
 
 $transition-speed: 100ms;
 
@@ -25,14 +25,267 @@ html, body {
   margin: 0;
   padding: 0;
 
-  background: #e8f5e9;
+  background: #020617;
   color: $text-color;
   font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 18px;
 }
 
 body {
-  margin: 80px 0;
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, rgba(79, 70, 229, 0.35), transparent 55%),
+              radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.4), transparent 45%),
+              #020617;
+}
+
+.app-shell {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.hero {
+  background: linear-gradient(135deg, rgba(15, 118, 255, 0.15), rgba(14, 116, 144, 0.1));
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 28px;
+  padding: 36px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 25px 80px rgba(2, 6, 23, 0.65);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: $bright-text-color;
+}
+
+.hero-pill {
+  align-self: flex-start;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  color: $bright-text-color;
+  background: rgba(15, 23, 42, 0.35);
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  line-height: 1.6;
+  margin: 0;
+  color: rgba($bright-text-color, 0.9);
+  max-width: 720px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hero-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 28px;
+  height: 48px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #38bdf8, #a855f7);
+  color: #0f172a;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.35);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px rgba(14, 165, 233, 0.45);
+  }
+}
+
+.ghost-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 22px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: transparent;
+  color: $bright-text-color;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease, transform 200ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: rgba(148, 163, 184, 0.7);
+    transform: translateY(-1px);
+  }
+}
+
+.ghost-button--full {
+  width: 100%;
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.glass-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 30px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(2, 6, 23, 0.6);
+  backdrop-filter: blur(14px);
+}
+
+.board-panel {
+  position: relative;
+  overflow: hidden;
+  color: $bright-text-color;
+}
+
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 24px;
+  color: $bright-text-color;
+}
+
+.board-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.board-heading h2 {
+  margin: 4px 0;
+  font-size: 36px;
+  color: $bright-text-color;
+}
+
+.board-subtitle,
+.eyebrow {
+  margin: 0;
+  color: rgba($bright-text-color, 0.7);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  color: #7dd3fc;
+}
+
+.scores-container.stacked {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.board-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.metric-badge {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: rgba($bright-text-color, 0.75);
+
+  strong {
+    font-size: 18px;
+    color: $bright-text-color;
+  }
+}
+
+.board-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.board-controls .restart-button {
+  min-width: 220px;
+}
+
+.info-card {
+  border-radius: 20px;
+  background: rgba(15, 15, 31, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  padding: 22px 24px;
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.05);
+}
+
+.info-card.hero-card {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
+}
+
+.info-card.compact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tip-list {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    padding-left: 18px;
+    position: relative;
+    color: rgba($bright-text-color, 0.85);
+    line-height: 1.5;
+
+    &:before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #38bdf8;
+      position: absolute;
+      left: 0;
+      top: 9px;
+    }
+  }
+}
+
+.tile-order-wrapper {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .heading {
@@ -40,11 +293,11 @@ body {
 }
 
 h1.title {
-  font-size: 80px;
-  font-weight: bold;
+  font-size: clamp(42px, 7vw, 84px);
+  font-weight: 800;
   margin: 0;
   display: block;
-  float: left;
+  color: $bright-text-color;
 }
 
 @include keyframes(move-up) {
@@ -69,16 +322,18 @@ h1.title {
 
   position: relative;
   display: inline-block;
-  background: $game-container-background;
+  background: rgba(15, 23, 42, 0.8);
   padding: 15px 25px;
   font-size: $height;
   height: $height;
   line-height: $height + 22px;
   font-weight: bold;
   border-radius: 3px;
-  color: white;
+  color: $bright-text-color;
   margin-top: 8px;
   text-align: center;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 15px 35px rgba(2, 6, 23, 0.45);
 
   &:after {
     position: absolute;
@@ -89,7 +344,7 @@ h1.title {
     font-size: 13px;
     line-height: 13px;
     text-align: center;
-    color: $tile-color;
+    color: #7dd3fc;
   }
 
   .score-addition {
@@ -121,10 +376,15 @@ p {
 }
 
 a {
-  color: $text-color;
-  font-weight: bold;
-  text-decoration: underline;
+  color: #7dd3fc;
+  font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
 }
 
 strong {
@@ -186,10 +446,13 @@ hr {
     -ms-touch-action: none;
     touch-action: none;
 
-    background: $game-container-background;
-    border-radius: $tile-border-radius * 2;
+    background: rgba(15, 23, 42, 0.85);
+    border-radius: $tile-border-radius * 3;
     width: $field-width;
     height: $field-width;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    box-shadow: 0 30px 80px rgba(2, 6, 23, 0.7);
+    backdrop-filter: blur(6px);
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -202,10 +465,11 @@ hr {
       right: 0;
       bottom: 0;
       left: 0;
-      background: rgba($tile-color, .5);
+      background: rgba(2, 6, 23, 0.78);
       z-index: 100;
 
       text-align: center;
+      color: $bright-text-color;
 
       p {
         font-size: 60px;
@@ -236,7 +500,7 @@ hr {
       @include animation-fill-mode(both);
 
       &.game-won {
-        background: rgba($tile-gold-color, .5);
+        background: rgba($tile-gold-color, .32);
         color: $bright-text-color;
 
 	a.keep-playing-button {
@@ -277,7 +541,8 @@ hr {
 
     border-radius: $tile-border-radius;
 
-    background: rgba($tile-color, .35);
+    background: rgba($bright-text-color, 0.03);
+    border: 1px solid rgba($bright-text-color, 0.05);
 
     &:last-child {
       margin-right: 0;
@@ -318,10 +583,12 @@ hr {
   .tile-inner {
     border-radius: $tile-border-radius;
 
-    background: $tile-color;
-    text-align: center;
-    font-weight: bold;
-    z-index: 10;
+      background: rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      text-align: center;
+      font-weight: bold;
+      z-index: 10;
+      color: $bright-text-color;
 
     font-size: 55px;
     
@@ -350,17 +617,17 @@ hr {
 
   // Specific colors per value (value: (background, bright-text?))
   $value-colors: (
-    2: (#f7f2eb, false),
-    4: (#e9e1ff, false),
-    8: (#ffd27f, true),
-    16: (#ffb347, true),
-    32: (#ff8c42, true),
-    64: (#ff5f5f, true),
-    128: (#66d6d1, true),
-    256: (#4db5ff, true),
-    512: (#5c7cfa, true),
-    1024: (#9b6bff, true),
-    2048: (#f5c400, true)
+    2: (#ecfeff, false),
+    4: (#cffafe, false),
+    8: (#bae6fd, false),
+    16: (#7dd3fc, true),
+    32: (#38bdf8, true),
+    64: (#0ea5e9, true),
+    128: (#22d3ee, true),
+    256: (#a855f7, true),
+    512: (#c084fc, true),
+    1024: (#f472b6, true),
+    2048: (#f97316, true)
   );
 
   // Build tile colors
@@ -409,7 +676,7 @@ hr {
   // Super tiles (above Beezy's Babies)
   &.tile-super .tile-inner {
     color: $bright-text-color;
-    background: mix(#1b5e20, $tile-gold-color, 85%);
+    background: mix(#0f172a, $tile-gold-color, 70%);
 
     font-size: 30px;
 
@@ -457,41 +724,95 @@ hr {
 }
 
 .above-game {
-  @include clearfix;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .game-intro {
-  float: left;
-  line-height: 42px;
-  margin-bottom: 0;
+  margin: 0;
+  flex: 1;
+  min-width: 200px;
+  line-height: 1.5;
+  color: rgba($bright-text-color, 0.85);
 }
 
 .restart-button {
   @include button;
-  display: block;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  float: right;
+  padding: 0 32px;
+  height: 48px;
+  line-height: 48px;
+  border-radius: 999px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f97316, #f472b6);
+  box-shadow: 0 15px 40px rgba(249, 115, 22, 0.3);
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 25px 55px rgba(249, 115, 22, 0.35);
+  }
 }
 
 .game-explanation {
-  margin-top: 50px;
+  margin-top: 32px;
+  color: rgba($bright-text-color, 0.7);
 }
 
 .tile-order-card {
-  margin-top: 24px;
-  background: lighten($game-container-background, 25%);
-  border: 1px solid lighten($text-color, 55%);
-  border-radius: 6px;
-  padding: 12px 14px;
+  margin-top: 0;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 18px;
+  padding: 18px 20px;
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.08);
 
   summary {
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 700;
     outline: none;
+    list-style: none;
+    color: $bright-text-color;
+    position: relative;
+    padding-right: 26px;
+    font-size: 18px;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:after {
+      content: "\25BE";
+      position: absolute;
+      right: 4px;
+      top: 0;
+      font-size: 16px;
+      transition: transform 200ms ease;
+    }
+  }
+
+  &[open] summary {
+    margin-bottom: 10px;
+    &:after {
+      transform: rotate(180deg);
+    }
   }
 
   .tile-order-body {
-    margin-top: 10px;
+    margin-top: 6px;
+
+    .tile-order-description {
+      color: rgba($bright-text-color, 0.75);
+    }
   }
 
   .tile-order-actions {
@@ -499,21 +820,26 @@ hr {
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
+    justify-content: flex-start;
   }
 
   #tile-order-shuffle,
   #tile-order-restore {
     @include button;
     border: 0;
-    height: 36px;
-    line-height: 36px;
-    padding: 0 14px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 16px;
     font-size: 14px;
+    border-radius: 12px;
+    background: rgba(59, 130, 246, 0.3);
   }
 
   .tile-order-label {
     font-size: 14px;
-    color: $text-color;
+    color: rgba($bright-text-color, 0.7);
+    font-weight: 600;
+    margin-left: auto;
   }
 
   .tile-order-list {
@@ -522,18 +848,19 @@ hr {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
   }
 
   .tile-order-chip {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 10px;
-    border-radius: 4px;
-    background: #f7f2eb;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.1);
     color: $text-color;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
 
     img {
       width: 28px;
@@ -542,17 +869,21 @@ hr {
       display: block;
     }
 
-    &.tile-color-2 { background: #f7f2eb; color: $text-color; }
-    &.tile-color-4 { background: #e9e1ff; color: $text-color; }
-    &.tile-color-8 { background: #ffd27f; color: $text-color; }
-    &.tile-color-16 { background: #ffb347; color: $bright-text-color; }
-    &.tile-color-32 { background: #ff8c42; color: $bright-text-color; }
-    &.tile-color-64 { background: #ff5f5f; color: $bright-text-color; }
-    &.tile-color-128 { background: #66d6d1; color: $bright-text-color; }
-    &.tile-color-256 { background: #4db5ff; color: $bright-text-color; }
-    &.tile-color-512 { background: #5c7cfa; color: $bright-text-color; }
-    &.tile-color-1024 { background: #9b6bff; color: $bright-text-color; }
-    &.tile-color-2048 { background: #f5c400; color: $bright-text-color; }
+    span {
+      font-weight: 700;
+    }
+
+    &.tile-color-2 { background: #ecfeff; color: #082f49; }
+    &.tile-color-4 { background: #cffafe; color: #0b3b58; }
+    &.tile-color-8 { background: #bae6fd; color: #082f49; }
+    &.tile-color-16 { background: #7dd3fc; color: $bright-text-color; }
+    &.tile-color-32 { background: #38bdf8; color: $bright-text-color; }
+    &.tile-color-64 { background: #0ea5e9; color: $bright-text-color; }
+    &.tile-color-128 { background: #22d3ee; color: $bright-text-color; }
+    &.tile-color-256 { background: #a855f7; color: $bright-text-color; }
+    &.tile-color-512 { background: #c084fc; color: $bright-text-color; }
+    &.tile-color-1024 { background: #f472b6; color: $bright-text-color; }
+    &.tile-color-2048 { background: #f97316; color: $bright-text-color; }
   }
 }
 
@@ -562,11 +893,12 @@ hr {
   left: 12px;
   right: 12px;
   z-index: 1000;
-  background: #f0f9f4;
-  border: 1px solid lighten($text-color, 55%);
-  border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.7);
   padding: 12px;
+  color: $bright-text-color;
 
   .install-banner__content {
     display: flex;
@@ -582,12 +914,12 @@ hr {
 
     strong {
       font-size: 15px;
-      color: $text-color;
+      color: $bright-text-color;
     }
 
     span {
       font-size: 13px;
-      color: darken($text-color, 5%);
+      color: rgba($bright-text-color, 0.7);
     }
   }
 
@@ -608,8 +940,8 @@ hr {
 
     &--ghost {
       background: transparent;
-      color: $text-color;
-      box-shadow: inset 0 0 0 1px lighten($text-color, 50%);
+      color: $bright-text-color;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.4);
     }
   }
 }
@@ -632,15 +964,16 @@ hr {
   }
 
   .howto-card {
-    background: #f0f9f4;
-    border-radius: 8px;
-    padding: 20px;
+    background: rgba(15, 23, 42, 0.95);
+    border-radius: 20px;
+    padding: 28px;
     max-width: 420px;
     width: min(420px, calc(100vw - 40px));
     margin: 0 auto;
     box-sizing: border-box;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
-    border: 1px solid lighten($text-color, 55%);
+    box-shadow: 0 25px 70px rgba(2, 6, 23, 0.65);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    color: $bright-text-color;
   }
 
   h2 {
@@ -664,16 +997,23 @@ hr {
   .howto-secondary {
     @include button;
     border: 0;
-    height: 38px;
-    line-height: 38px;
-    padding: 0 16px;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 20px;
     cursor: pointer;
+    border-radius: 12px;
+  }
+
+  .howto-primary {
+    background: linear-gradient(135deg, #38bdf8, #9333ea);
+    color: #0f172a;
+    font-weight: 700;
   }
 
   .howto-secondary {
     background: transparent;
-    color: $text-color;
-    box-shadow: inset 0 0 0 1px lighten($text-color, 50%);
+    color: $bright-text-color;
+    box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.4);
   }
 }
 
@@ -688,7 +1028,7 @@ body.howto-open {
   $grid-spacing: 10px;
   $grid-row-cells: 4;
   $tile-size: ($field-width - $grid-spacing * ($grid-row-cells + 1)) / $grid-row-cells;
-  $tile-border-radius: 3px;
+  $tile-border-radius: 6px;
   $game-container-margin-top: 17px;
 
   html, body {
@@ -696,57 +1036,90 @@ body.howto-open {
   }
 
   body {
-    margin: 12px 0;
-    padding: 0 8px;
+    margin: 0;
+    padding: 0;
   }
 
-  h1.title {
-    font-size: 27px;
-    margin-top: 15px;
-  }
-
-  .container {
+  .app-shell {
     width: 100%;
-    max-width: none;
-    margin: 0 auto;
+    padding: 32px 16px 48px;
+    gap: 20px;
   }
 
-  .score-container, .best-container {
-    margin-top: 0;
-    padding: 15px 10px;
-    min-width: 40px;
+  .hero {
+    padding: 28px 22px;
+    border-radius: 22px;
+    text-align: left;
   }
 
-  .heading {
-    margin-bottom: 10px;
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+
+    .hero-primary,
+    .ghost-button {
+      width: 100%;
+    }
   }
 
-  // Show intro and restart button side by side
+  .game-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .glass-card {
+    padding: 24px;
+    border-radius: 22px;
+  }
+
+  .board-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .scores-container.stacked {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .board-metrics {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  .board-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .game-intro {
-    width: 55%;
-    display: block;
-    box-sizing: border-box;
-    line-height: 1.65;
+    width: 100%;
   }
 
   .restart-button {
-    width: 42%;
-    padding: 0;
-    display: block;
-    box-sizing: border-box;
-    margin-top: 2px;
+    width: 100%;
+  }
+
+  .info-panel {
+    gap: 16px;
+    position: static;
   }
 
   .tile-order-card {
-    padding: 10px 12px;
+    padding: 14px 16px;
 
-    #tile-order-shuffle {
+    #tile-order-shuffle,
+    #tile-order-restore {
       width: 100%;
-      max-width: 180px;
     }
 
     .tile-order-label {
       display: block;
+      width: 100%;
     }
 
     .tile-order-actions {
@@ -759,9 +1132,9 @@ body.howto-open {
 
   // Full-width mobile overrides using CSS variables so the board scales to the viewport
   .game-container {
-    --board: min(100vw - 12px, 520px);
-    --pad: 6px;
-    --tile-gap: 4px;
+    --board: min(100vw - 24px, 520px);
+    --pad: 10px;
+    --tile-gap: 6px;
     // subtract padding to avoid overflow
     --tile-size: calc((var(--board) - (2 * var(--pad)) - (3 * var(--tile-gap))) / 4);
     --tile-step: calc(var(--tile-size) + var(--tile-gap));

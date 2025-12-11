@@ -5,6 +5,7 @@
 
   var startBtn = document.getElementById("howto-start");
   var skipBtn = document.getElementById("howto-skip");
+  var triggers = document.querySelectorAll("[data-open-howto]");
   var STORAGE_KEY = "beezy_howto_dismissed";
 
   function hide() {
@@ -22,6 +23,24 @@
 
   if (startBtn) startBtn.addEventListener("click", hide);
   if (skipBtn) skipBtn.addEventListener("click", hide);
+
+  Array.prototype.forEach.call(triggers, function (button) {
+    button.addEventListener("click", function () {
+      show();
+    });
+  });
+
+  overlay.addEventListener("click", function (event) {
+    if (event.target === overlay) {
+      hide();
+    }
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      hide();
+    }
+  });
 
   var alreadyDismissed = false;
   try {
