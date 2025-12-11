@@ -63,6 +63,20 @@ h1.title {
   align-items: stretch;
   width: 100%;
   max-width: 320px; }
+.beezy-reaction {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2d5016;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; }
+.beezy-reaction-face {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: #f4fbf4 url("../images/beezy-reactions.png") center center / 300% 200% no-repeat;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.65); }
 
 .score-container, .best-container {
   position: relative;

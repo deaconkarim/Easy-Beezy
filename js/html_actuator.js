@@ -9,6 +9,17 @@ function HTMLActuator() {
   this.progressValue    = document.querySelector(".progress-value");
   this.progressGoal     = window.progressGoal || 4096;
   this.boardContainer   = document.querySelector(".game-container");
+  this.reactionEl       = document.querySelector(".beezy-reaction");
+  this.reactionFace     = document.querySelector(".beezy-reaction-face");
+  this.reactionText     = document.querySelector(".beezy-reaction-text");
+  this.lastEmptyCells   = null;
+  this.lastMaxTile      = 0;
+  this.firstMergeDone   = false;
+  this.introText        = (document.querySelector(".game-intro") && document.querySelector(".game-intro").textContent.trim()) || "Join the babies to make Beezy Happy!";
+
+  // Set initial face/text
+  if (this.reactionFace) this.setReactionFace("smile");
+  if (this.reactionText) this.reactionText.textContent = this.introText;
 
   this.score = 0;
 }
@@ -27,9 +38,14 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       });
     });
 
+    var prevScore = self.score;
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
-    self.updateProgress(self.getMaxTile(grid));
+    var scoreDelta = metadata.score - prevScore;
+    var maxTile = self.getMaxTile(grid);
+    var emptyCells = self.getEmptyCells(grid);
+    self.updateProgress(maxTile);
+    self.updateReaction(maxTile, emptyCells, scoreDelta, metadata);
 
     if (metadata.terminated) {
       if (metadata.over) {
@@ -159,6 +175,111 @@ HTMLActuator.prototype.updateProgress = function (maxTile) {
   this.progressValue.textContent = "Top Level: " + label;
 };
 
+HTMLActuator.prototype.getEmptyCells = function (grid) {
+  var count = 0;
+  grid.cells.forEach(function (column) {
+    column.forEach(function (cell) {
+      if (!cell) count += 1;
+    });
+  });
+  return count;
+};
+
+HTMLActuator.prototype.updateReaction = function (maxTile, emptyCells, scoreDelta, metadata) {
+  if (!this.reactionEl) return;
+  var text = null;
+  var faceKey = null;
+  var lastEmpty = this.lastEmptyCells;
+  var lastMax = this.lastMaxTile || 0;
+  var newMax = maxTile > lastMax;
+
+  var hugeMerge = scoreDelta >= 512;
+  var bigMerge = scoreDelta >= 256;
+  var comeback = (lastEmpty !== null && lastEmpty <= 1 && emptyCells >= 4 && scoreDelta > 0);
+  var danger = emptyCells <= 1;
+  var lowSpace = emptyCells <= 2;
+
+  // Mark first merge
+  if (scoreDelta > 0) {
+    this.firstMergeDone = true;
+  }
+
+  if (metadata.over) {
+    faceKey = "sad";
+    text = "Trapped!";
+  } else if (metadata.won || maxTile >= 4096) {
+    faceKey = "star";
+    text = "Legend Beezy!";
+  } else if (newMax && maxTile >= 1024) {
+    faceKey = "star";
+    text = "New level!";
+  } else if (hugeMerge) {
+    faceKey = "party";
+    text = "Massive merge!";
+  } else if (comeback) {
+    faceKey = "cool";
+    text = "Clutched space!";
+  } else if (emptyCells <= 1) {
+    faceKey = "tight";
+    text = "Tight corner!";
+  } else if (bigMerge) {
+    faceKey = "party";
+    text = "What a comeback!";
+  } else if (maxTile >= 1024) {
+    faceKey = "cool";
+    text = "On a roll!";
+  } else if (scoreDelta > 0) {
+    var phrases = [
+      { face: "smile", text: "Smooth slide!" },
+      { face: "cool", text: "Keep that flow." },
+      { face: "smile", text: "Clean merge!" },
+      { face: "tight", text: "Watch your space." },
+      { face: "party", text: "Little win!" }
+    ];
+    if (Math.random() < 0.35) {
+      var pick = phrases[Math.floor(Math.random() * phrases.length)];
+      faceKey = pick.face;
+      text = pick.text;
+    } else {
+      return; // keep current reaction to avoid spamming
+    }
+  } else if (!this.firstMergeDone) {
+    // Before first merge, keep intro text and do not overwrite
+    return;
+  } else if (lowSpace) {
+    faceKey = "tight";
+    text = "Space is tight.";
+  }
+
+  if (text === null || faceKey === null) {
+    this.lastEmptyCells = emptyCells;
+    this.lastMaxTile = maxTile;
+    return;
+  }
+
+  this.setReactionFace(faceKey);
+  if (this.reactionText) {
+    this.reactionText.textContent = text;
+  }
+
+  this.lastEmptyCells = emptyCells;
+  this.lastMaxTile = maxTile;
+};
+
+HTMLActuator.prototype.setReactionFace = function (key) {
+  if (!this.reactionFace) return;
+  var positions = {
+    smile: "0% 0%",
+    cool: "50% 0%",
+    star: "100% 0%",
+    sad: "0% 100%",
+    party: "50% 100%",
+    tight: "100% 100%"
+  };
+  var pos = positions[key] || positions.smile;
+  this.reactionFace.style.backgroundPosition = pos;
+};
+
 HTMLActuator.prototype.triggerDelight = function () {
   if (!this.boardContainer) return;
   this.boardContainer.classList.add("delight");
@@ -180,6 +301,8 @@ HTMLActuator.prototype.saveSeenMergeValues = function () {
 
 HTMLActuator.prototype.resetMergeSeenTiles = function () {
   this.seenMergeValues = new Set();
+  // Reset first-merge state so intro message can appear next game
+  this.firstMergeDone = false;
 };
 
 HTMLActuator.prototype.ensureMergeToast = function () {
