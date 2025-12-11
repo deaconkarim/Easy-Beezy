@@ -20,16 +20,27 @@
 <body>
   <div class="container">
     <div class="heading">
-      <h1 class="title">Beezy's Babies</h1>
-      <div class="scores-container">
-        <div class="score-container">0</div>
-        <div class="best-container">0</div>
+      <div class="header-top">
+        <h1 class="title">Beezy's Babies</h1>
+        <a class="restart-button">New Game</a>
+      </div>
+      <div class="header-meta">
+        <p class="game-intro">Join the babies to make <strong>Beezy Happy!</strong></p>
+        <div class="scores-container">
+          <div class="score-container">0</div>
+          <div class="best-container">0</div>
+        </div>
       </div>
     </div>
 
-    <div class="above-game">
-      <p class="game-intro">Join the babies to make <strong>Beezy Happy!</strong></p>
-      <a class="restart-button">New Game</a>
+    <div class="progress-track" aria-label="Progress to top tile">
+      <div class="progress-meta">
+        <span class="progress-label">Progress</span>
+        <span class="progress-value">Top: 0</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
     </div>
 
     <div class="game-container">
@@ -87,12 +98,22 @@
     </div>
   </div>
 
+  <!-- Mode selection overlay -->
+  <div class="mode-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="mode-title">
+    <div class="mode-card">
+      <h2 id="mode-title">Choose your run</h2>
+      <p class="mode-subtitle">Classic keeps babies in age order. Shuffle randomizes them.</p>
+      <div class="mode-actions">
+        <button class="mode-btn mode-btn--primary" id="mode-classic">Classic mode</button>
+        <button class="mode-btn mode-btn--ghost" id="mode-shuffle">Shuffle mode</button>
+      </div>
+    </div>
+  </div>
+
     <details class="tile-order-card">
       <summary>Tile order (low to high)</summary>
       <div class="tile-order-body">
-        <p class="tile-order-description">
-          View the sequence of tiles from the starting baby up to the biggest merge. Shuffle to see a random order.
-        </p>
+       
         <div class="tile-order-actions">
           <button id="tile-order-shuffle" type="button">Shuffle order</button>
           <button id="tile-order-restore" type="button">Restore order</button>

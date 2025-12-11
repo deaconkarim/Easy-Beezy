@@ -10,6 +10,26 @@ function initTileOrder() {
 
   if (!listEl || !shuffleBtn || !labelEl || !restoreBtn) return;
 
+  var defaultNames = {
+    2: "Enmebaragesi",
+    4: "Titan",
+    8: "Sniper",
+    16: "Cali",
+    32: "Axel",
+    64: "Diesel",
+    128: "Jaxson",
+    256: "Adrianna",
+    512: "Ty",
+    1024: "Joey",
+    2048: "BG",
+    4096: "Beezy"
+  };
+
+  function getTileName(imgValue, value) {
+    var nameMap = window.tileNames || defaultNames;
+    return nameMap[imgValue] || nameMap[value] || ("Tile " + value);
+  }
+
   function applyImageMap(order) {
     // Map numeric value -> image value (order index maps to canonical base order)
     var map = {};
@@ -20,30 +40,30 @@ function initTileOrder() {
   }
 
   function render(order) {
-    // Keep numeric order fixed; only images swap
-    labelEl.textContent = baseOrder.join(" \u2192 ");
+    // Keep numeric order fixed; only images swap; hide text label
+    labelEl.textContent = "";
 
     applyImageMap(order);
 
     listEl.innerHTML = "";
     baseOrder.forEach(function (value, idx) {
       var imgValue = order[idx];
-
       var item = document.createElement("li");
       item.className = "tile-order-chip tile-color-" + value;
 
       var img = document.createElement("img");
       img.src = "images/tiles/" + imgValue + ".png";
-      img.alt = value;
+      var name = getTileName(imgValue, value);
+      img.alt = name;
 
       img.onerror = function () {
         img.remove();
       };
 
       item.appendChild(img);
-
       var label = document.createElement("span");
-      label.textContent = value;
+      label.className = "tile-order-name";
+      label.textContent = name;
       item.appendChild(label);
 
       listEl.appendChild(item);
@@ -70,10 +90,11 @@ function initTileOrder() {
       if (!value) return;
 
       var imgValue = (window.tileImageMap && window.tileImageMap[value]) || value;
+      var name = getTileName(imgValue, value);
       var img = tileEl.querySelector(".tile-inner img");
       if (img) {
         img.src = "images/tiles/" + imgValue + ".png";
-        img.alt = value;
+        img.alt = name;
       }
     });
   }
@@ -99,6 +120,15 @@ function initTileOrder() {
 
   // Initial render in sorted order
   render(baseOrder);
+
+  // Expose helpers for external mode selection
+  window.setTileOrderClassic = function () {
+    render(baseOrder);
+  };
+
+  window.setTileOrderShuffle = function () {
+    render(shuffledCopy(baseOrder));
+  };
 }
 
 if (document.readyState === "loading") {

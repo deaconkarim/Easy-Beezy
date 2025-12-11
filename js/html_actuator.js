@@ -5,6 +5,10 @@ function HTMLActuator() {
   this.messageContainer = document.querySelector(".game-message");
   this.mergeToast       = this.ensureMergeToast();
   this.seenMergeValues  = this.loadSeenMergeValues();
+  this.progressFill     = document.querySelector(".progress-fill");
+  this.progressValue    = document.querySelector(".progress-value");
+  this.progressGoal     = window.progressGoal || 4096;
+  this.boardContainer   = document.querySelector(".game-container");
 
   this.score = 0;
 }
@@ -25,6 +29,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
+    self.updateProgress(self.getMaxTile(grid));
 
     if (metadata.terminated) {
       if (metadata.over) {
@@ -101,6 +106,7 @@ HTMLActuator.prototype.addTile = function (tile) {
 
     // Show celebration for the resulting merged tile (first time per value)
     this.showMergeToast(tile.value, imgValue);
+    this.triggerDelight();
   } else {
     classes.push("tile-new");
     this.applyClasses(wrapper, classes);
@@ -111,6 +117,56 @@ HTMLActuator.prototype.addTile = function (tile) {
 
   // Put the tile on the board
   this.tileContainer.appendChild(wrapper);
+};
+
+HTMLActuator.prototype.getMaxTile = function (grid) {
+  var max = 0;
+  grid.cells.forEach(function (column) {
+    column.forEach(function (cell) {
+      if (cell && cell.value > max) max = cell.value;
+    });
+  });
+  return max;
+};
+
+HTMLActuator.prototype.updateProgress = function (maxTile) {
+  if (!this.progressFill || !this.progressValue) return;
+  var goal = this.progressGoal || 4096;
+  var pct = 0;
+  if (maxTile >= 2) {
+    var steps = Math.log2(goal) - 1;
+    pct = Math.min(1, Math.max(0, (Math.log2(maxTile) - 1) / steps));
+  }
+  this.progressFill.style.width = Math.round(pct * 100) + "%";
+  // Map tile to display name using current image mapping
+  var defaultNames = {
+    2: "Enmebaragesi",
+    4: "Titan",
+    8: "Sniper",
+    16: "Cali",
+    32: "Axel",
+    64: "Diesel",
+    128: "Jaxson",
+    256: "Adrianna",
+    512: "Ty",
+    1024: "Joey",
+    2048: "BG",
+    4096: "Beezy's Babies"
+  };
+  var imgKey = (window.tileImageMap && window.tileImageMap[maxTile]) || maxTile;
+  var nameMap = window.tileNames || defaultNames;
+  var label = nameMap[imgKey] || nameMap[maxTile] || ("Tile " + maxTile);
+  this.progressValue.textContent = "Top Level: " + label;
+};
+
+HTMLActuator.prototype.triggerDelight = function () {
+  if (!this.boardContainer) return;
+  this.boardContainer.classList.add("delight");
+  clearTimeout(this.delightTimer);
+  var self = this;
+  this.delightTimer = setTimeout(function () {
+    self.boardContainer.classList.remove("delight");
+  }, 600);
 };
 
 HTMLActuator.prototype.loadSeenMergeValues = function () {

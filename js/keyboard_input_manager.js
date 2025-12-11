@@ -129,7 +129,11 @@ KeyboardInputManager.prototype.listen = function () {
 
 KeyboardInputManager.prototype.restart = function (event) {
   event.preventDefault();
-  this.emit("restart");
+  if (window.requestModeRestart) {
+    window.requestModeRestart();
+  } else {
+    this.emit("restart");
+  }
 };
 
 KeyboardInputManager.prototype.keepPlaying = function (event) {
