@@ -396,6 +396,14 @@ hr {
     @media screen and (max-width: 520px) {
       .tile.tile-2048 .tile-inner {
         font-size: 15px; } }
+  .tile.tile-4096 .tile-inner {
+    color: #f0f9f4;
+    background: #2e7d32;
+    box-shadow: 0 0 18px 6px rgba(129, 199, 132, 0.61111), inset 0 0 0 1px rgba(255, 255, 255, 0.36111);
+    font-size: 35px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-4096 .tile-inner {
+        font-size: 15px; } }
   .tile.tile-super .tile-inner {
     color: #f0f9f4;
     background: #2e7d32;
@@ -674,6 +682,11 @@ hr {
       background: #9b6bff;
       color: #f0f9f4; }
     .tile-order-card .tile-order-chip.tile-color-2048 {
+      background: #f5c400;
+      color: #f0f9f4; }
+    .tile-order-card .tile-order-chip.tile-color-4096 {
+      background: #2e7d32;
+      color: #f0f9f4; }
       background: #f5c400;
       color: #f0f9f4; }
 

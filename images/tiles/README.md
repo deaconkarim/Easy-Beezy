@@ -17,7 +17,8 @@ The game uses powers of 2 for tile values. You need to create images named:
 - `512.png` - for tile value 512
 - `1024.png` - for tile value 1024
 - `2048.png` - for tile value 2048
-- `4096.png` and higher for super tiles (optional)
+- `4096.png` - for tile value 4096 (Beezy's Babies goal!)
+- `8192.png` and higher for super tiles (optional)
 
 ## Image Recommendations
 

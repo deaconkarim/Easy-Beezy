@@ -346,7 +346,7 @@ hr {
 
   $base: 2;
   $exponent: 1;
-  $limit: 11;
+  $limit: 12;
 
   // Specific colors per value (value: (background, bright-text?))
   $value-colors: (
@@ -360,7 +360,8 @@ hr {
     256: (#4db5ff, true),
     512: (#5c7cfa, true),
     1024: (#9b6bff, true),
-    2048: (#f5c400, true)
+    2048: (#f5c400, true),
+    4096: (#2e7d32, true)
   );
 
   // Build tile colors
@@ -406,7 +407,7 @@ hr {
     $exponent: $exponent + 1;
   }
 
-  // Super tiles (above Beezy's Babies)
+  // Super tiles (above 4096)
   &.tile-super .tile-inner {
     color: $bright-text-color;
     background: mix(#1b5e20, $tile-gold-color, 85%);
@@ -572,6 +573,7 @@ hr {
     &.tile-color-512 { background: #5c7cfa; color: $bright-text-color; }
     &.tile-color-1024 { background: #9b6bff; color: $bright-text-color; }
     &.tile-color-2048 { background: #f5c400; color: $bright-text-color; }
+    &.tile-color-4096 { background: #2e7d32; color: $bright-text-color; }
   }
 }
 

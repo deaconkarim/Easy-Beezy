@@ -60,7 +60,7 @@ HTMLActuator.prototype.addTile = function (tile) {
   var classes = ["tile", "tile-" + tile.value, positionClass];
 
   // Super tiles (above Beezy's Babies)
-  if (tile.value > 2048) classes.push("tile-super");
+  if (tile.value > 4096) classes.push("tile-super");
 
   this.applyClasses(wrapper, classes);
 
@@ -177,7 +177,7 @@ HTMLActuator.prototype.showMergeToast = function (value, imgValue) {
     512: "Ty",
     1024: "Joey",
     2048: "BG",
-    4096: "A Happy Beezy!"
+    4096: "Beezy's Babies"
   };
 
   var nameMap = (window.tileNames) || defaultNames;

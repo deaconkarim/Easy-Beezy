@@ -1,7 +1,7 @@
 // Renders and shuffles the visible tile order list.
 // Only changes which images are used for each numeric value; it does NOT alter game values.
 function initTileOrder() {
-  var baseOrder = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
+  var baseOrder = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096];
 
   var listEl = document.getElementById("tile-order-list");
   var shuffleBtn = document.getElementById("tile-order-shuffle");

@@ -26,7 +26,8 @@ const ASSETS = [
   "./images/tiles/256.png",
   "./images/tiles/512.png",
   "./images/tiles/1024.png",
-  "./images/tiles/2048.png"
+  "./images/tiles/2048.png",
+  "./images/tiles/4096.png"
 ];
 
 self.addEventListener("install", (event) => {
