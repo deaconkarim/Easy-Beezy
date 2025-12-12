@@ -35,6 +35,26 @@ body {
   margin: 80px 0;
 }
 
+// iOS standalone (and other notch devices): paint the safe-area "top bar" region
+// so the status bar blends with the game's green.
+@supports (padding-top: env(safe-area-inset-top)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  body:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top);
+    background: $game-container-background;
+    pointer-events: none;
+    z-index: 9999;
+  }
+}
+
 .heading {
   @include clearfix;
 }

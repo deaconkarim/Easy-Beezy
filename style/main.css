@@ -10,6 +10,20 @@ html, body {
 body {
   margin: 80px 0; }
 
+@supports (padding-top: env(safe-area-inset-top)) {
+  body {
+    padding-top: env(safe-area-inset-top); }
+  body:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top);
+    background: #81c784;
+    pointer-events: none;
+    z-index: 9999; } }
+
 /* Intro loading screen */
 .intro-overlay {
   position: fixed;
