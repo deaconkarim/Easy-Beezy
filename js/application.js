@@ -22,6 +22,15 @@ window.requestAnimationFrame(function () {
       if (typeof onChoose === "function") onChoose();
       return;
     }
+
+    // Clear current board visuals immediately
+    if (window.gameManager && window.gameManager.actuator) {
+      var act = window.gameManager.actuator;
+      if (act.clearContainer && act.tileContainer) {
+        act.clearContainer(act.tileContainer);
+      }
+      if (act.clearMessage) act.clearMessage();
+    }
     modeOverlay.classList.remove("hidden");
     modeOverlay.classList.add("visible");
 

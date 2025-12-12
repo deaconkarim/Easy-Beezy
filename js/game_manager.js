@@ -20,6 +20,7 @@ GameManager.prototype.restart = function () {
   if (this.actuator && this.actuator.resetMergeSeenTiles) {
     this.actuator.resetMergeSeenTiles();
   }
+  this.startTileValue = window.startTileValue || null;
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
 };
@@ -53,7 +54,7 @@ GameManager.prototype.setup = function () {
     this.over        = false;
     this.won         = false;
     this.keepPlaying = false;
-    this.startTileValue = window.startTileValue || this.startTileValue || null;
+    this.startTileValue = window.startTileValue || null;
 
     // Add the initial tiles
     this.addStartTiles();
