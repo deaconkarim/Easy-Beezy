@@ -4,23 +4,11 @@ window.requestAnimationFrame(function () {
     var overlay = document.querySelector(".intro-overlay");
     if (!overlay) { if (typeof onDone === "function") onDone(); return; }
 
-    // Only show once per tab session
-    var SESSION_KEY = "beezy_intro_dismissed_v1";
-    var already = false;
-    try { already = sessionStorage.getItem(SESSION_KEY) === "1"; } catch (e) {}
-
     function setFaceAndQuote(item) {
       var face = overlay.querySelector(".intro-face");
       var quote = overlay.querySelector(".intro-quote");
       if (face) face.style.backgroundImage = 'url("images/' + item.file + '")';
       if (quote) quote.textContent = item.text;
-    }
-
-    if (already) {
-      overlay.classList.add("hidden");
-      overlay.classList.remove("visible");
-      if (typeof onDone === "function") onDone();
-      return;
     }
 
     var items = [
@@ -50,7 +38,6 @@ window.requestAnimationFrame(function () {
       if (done) return;
       done = true;
       clearInterval(intervalId);
-      try { sessionStorage.setItem(SESSION_KEY, "1"); } catch (e) {}
 
       overlay.classList.remove("visible");
       overlay.classList.add("hidden");

@@ -14,10 +14,7 @@ body {
 .intro-overlay {
   position: fixed;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
+  display: block;
   background: radial-gradient(circle at 20% 20%, rgba(129, 199, 132, 0.35), rgba(0, 0, 0, 0.65));
   z-index: 5000;
   opacity: 0;
@@ -33,18 +30,20 @@ body {
   pointer-events: auto;
 }
 .intro-card {
-  width: min(520px, 100%);
-  background: rgba(12, 28, 18, 0.92);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(12, 28, 18, 0.50);
   color: #f0f9f4;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55);
-  padding: 22px 20px 18px;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+  padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
   display: grid;
   gap: 12px;
   text-align: center;
   transform: translateY(6px) scale(0.98);
   transition: transform 240ms ease, opacity 240ms ease;
+  place-content: center;
 }
 .intro-overlay.visible .intro-card {
   transform: translateY(0) scale(1);
