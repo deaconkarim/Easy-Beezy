@@ -1,5 +1,73 @@
 // Wait till the browser is ready to render the game (avoids glitches)
 window.requestAnimationFrame(function () {
+  function runIntro(onDone) {
+    var overlay = document.querySelector(".intro-overlay");
+    if (!overlay) { if (typeof onDone === "function") onDone(); return; }
+
+    function setFaceAndQuote(item) {
+      var face = overlay.querySelector(".intro-face");
+      var quote = overlay.querySelector(".intro-quote");
+      if (face) face.style.backgroundImage = 'url("images/' + item.file + '")';
+      if (quote) quote.textContent = item.text;
+    }
+
+    var items = [
+      { file: "smile.png", text: "Let's go" },
+      { file: "cool.png", text: "Fresh start!" },
+      { file: "party.png", text: "Tiny celebration!" },
+      { file: "star.png", text: "New level!" },
+      { file: "tight.png", text: "Keep space open." },
+      { file: "sad.png", text: "Tight corner!" },
+      { file: "cool.png", text: "You nailed it!" },
+      { file: "smile.png", text: "Beezy approves!" }
+    ];
+
+    var idx = 0;
+    setFaceAndQuote(items[idx]);
+
+    overlay.classList.remove("hidden");
+    overlay.classList.add("visible");
+
+    var done = false;
+    var intervalId = setInterval(function () {
+      idx = (idx + 1) % items.length;
+      setFaceAndQuote(items[idx]);
+    }, 650);
+
+    function finish() {
+      if (done) return;
+      done = true;
+      clearInterval(intervalId);
+
+      overlay.classList.remove("visible");
+      overlay.classList.add("hidden");
+
+      // remove listeners
+      window.removeEventListener("keydown", onKey);
+      overlay.removeEventListener("click", finish);
+      overlay.removeEventListener("touchstart", finish);
+
+      // Wait for fade-out to begin, then continue.
+      setTimeout(function () {
+        if (typeof onDone === "function") onDone();
+      }, 230);
+    }
+
+    function onKey(e) {
+      // ignore modifier-only keys
+      if (!e) return finish();
+      if (e.key === "Shift" || e.key === "Alt" || e.key === "Control" || e.key === "Meta") return;
+      finish();
+    }
+
+    overlay.addEventListener("click", finish);
+    overlay.addEventListener("touchstart", finish, { passive: true });
+    window.addEventListener("keydown", onKey);
+
+    // Auto-dismiss shortly after first paint
+    setTimeout(finish, 2600);
+  }
+
   // Default mode state
   window.startTileValue = null;
   window.tileOrderStart = null;
@@ -77,6 +145,8 @@ window.requestAnimationFrame(function () {
     window.showModeOverlay();
   };
 
-  // Show mode chooser on first load (no restart)
-  window.showModeOverlay();
+  // Show intro first, then mode chooser (no restart)
+  runIntro(function () {
+    window.showModeOverlay();
+  });
 });

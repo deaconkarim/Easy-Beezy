@@ -10,6 +10,73 @@ html, body {
 body {
   margin: 80px 0; }
 
+/* Intro loading screen */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0c1c12;
+  z-index: 5000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+.intro-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.intro-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.intro-card {
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  color: #f0f9f4;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+  padding: max(40px, env(safe-area-inset-top)) max(28px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(28px, env(safe-area-inset-left));
+  display: grid;
+  gap: 18px;
+  text-align: center;
+  transform: translateY(6px) scale(0.98);
+  transition: transform 240ms ease, opacity 240ms ease;
+  place-content: center;
+}
+.intro-overlay.visible .intro-card {
+  transform: translateY(0) scale(1);
+}
+.intro-face {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.10) center center / contain no-repeat;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.intro-title {
+  font-family: "Inter", "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  font-size: clamp(34px, 6vw, 54px);
+  letter-spacing: 0.01em;
+}
+.intro-quote {
+  font-size: clamp(18px, 3.2vw, 26px);
+  line-height: 1.45;
+  color: rgba(240, 249, 244, 0.9);
+  min-height: 70px;
+  max-width: 34ch;
+  margin: 0 auto;
+}
+.intro-hint {
+  font-size: clamp(14px, 2.6vw, 18px);
+  color: rgba(240, 249, 244, 0.8);
+}
+
 .heading:after {
   content: "";
   display: block;
