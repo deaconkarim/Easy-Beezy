@@ -1,4 +1,4 @@
-const CACHE_NAME = "Beezys-babies-v1";
+const CACHE_NAME = "Beezys-babies-v2";
 const ASSETS = [
   "./",
   "./index.html",
@@ -16,6 +16,12 @@ const ASSETS = [
   "./js/tile_order.js",
   "./js/howto.js",
   "./js/pwa.js",
+  "./images/smile.png",
+  "./images/cool.png",
+  "./images/star.png",
+  "./images/party.png",
+  "./images/sad.png",
+  "./images/tight.png",
   "./images/tiles/2.png",
   "./images/tiles/4.png",
   "./images/tiles/8.png",

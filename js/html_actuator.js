@@ -345,7 +345,7 @@ HTMLActuator.prototype.setReactionFace = function (key) {
     star: "star.png",
     sad: "sad.png",
     party: "party.png",
-    tight: "sad.png"
+    tight: "tight.png"
   };
   var file = map[key] || map.smile;
   this.reactionFace.style.backgroundImage = 'url("images/' + file + '")';
