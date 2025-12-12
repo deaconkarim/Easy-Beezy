@@ -33,7 +33,8 @@ function initTileOrder() {
   function applyImageMap(order) {
     // Map numeric value -> image value (order index maps to canonical base order)
     var map = {};
-    baseOrder.forEach(function (value, idx) {
+    var activeBase = window.tileOrderStart ? baseOrder.filter(function (v) { return v >= window.tileOrderStart; }) : baseOrder;
+    activeBase.forEach(function (value, idx) {
       map[value] = order[idx];
     });
     window.tileImageMap = map;
@@ -46,8 +47,11 @@ function initTileOrder() {
     applyImageMap(order);
 
     listEl.innerHTML = "";
-    baseOrder.forEach(function (value, idx) {
-      var imgValue = order[idx];
+    var activeBase = window.tileOrderStart ? baseOrder.filter(function (v) { return v >= window.tileOrderStart; }) : baseOrder;
+    var activeOrder = window.tileOrderStart ? order.filter(function (v) { return v >= window.tileOrderStart; }) : order;
+
+    activeBase.forEach(function (value, idx) {
+      var imgValue = activeOrder[idx];
       var item = document.createElement("li");
       item.className = "tile-order-chip tile-color-" + value;
 
@@ -111,23 +115,28 @@ function initTileOrder() {
   }
 
   shuffleBtn.addEventListener("click", function () {
-    render(shuffledCopy(baseOrder));
+    var activeBase = window.tileOrderStart ? baseOrder.filter(function (v) { return v >= window.tileOrderStart; }) : baseOrder;
+    render(shuffledCopy(activeBase));
   });
 
   restoreBtn.addEventListener("click", function () {
-    render(baseOrder);
+    var activeBase = window.tileOrderStart ? baseOrder.filter(function (v) { return v >= window.tileOrderStart; }) : baseOrder;
+    render(activeBase);
   });
 
   // Initial render in sorted order
-  render(baseOrder);
+  var initialBase = window.tileOrderStart ? baseOrder.filter(function (v) { return v >= window.tileOrderStart; }) : baseOrder;
+  render(initialBase);
 
   // Expose helpers for external mode selection
   window.setTileOrderClassic = function () {
-    render(baseOrder);
+    var activeBase = window.tileOrderStart ? baseOrder.filter(function (v) { return v >= window.tileOrderStart; }) : baseOrder;
+    render(activeBase);
   };
 
   window.setTileOrderShuffle = function () {
-    render(shuffledCopy(baseOrder));
+    var activeBase = window.tileOrderStart ? baseOrder.filter(function (v) { return v >= window.tileOrderStart; }) : baseOrder;
+    render(shuffledCopy(activeBase));
   };
 }
 

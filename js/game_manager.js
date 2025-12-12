@@ -4,6 +4,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.storageManager = new StorageManager;
   this.actuator       = new Actuator;
 
+  this.startTileValue  = window.startTileValue || null;
   this.startTiles     = 2;
 
   this.inputManager.on("move", this.move.bind(this));
@@ -52,6 +53,7 @@ GameManager.prototype.setup = function () {
     this.over        = false;
     this.won         = false;
     this.keepPlaying = false;
+    this.startTileValue = window.startTileValue || this.startTileValue || null;
 
     // Add the initial tiles
     this.addStartTiles();
@@ -63,15 +65,25 @@ GameManager.prototype.setup = function () {
 
 // Set up the initial tiles to start the game with
 GameManager.prototype.addStartTiles = function () {
-  for (var i = 0; i < this.startTiles; i++) {
+  var remaining = this.startTiles;
+  if (this.startTileValue) {
+    // For easy mode: start both tiles at the higher value and skip low tiles
+    remaining = this.startTiles;
+    for (var j = 0; j < remaining; j++) {
+      this.addRandomTile(this.startTileValue);
+    }
+    return;
+  }
+  for (var i = 0; i < remaining; i++) {
     this.addRandomTile();
   }
 };
 
 // Adds a tile in a random position
-GameManager.prototype.addRandomTile = function () {
+GameManager.prototype.addRandomTile = function (forcedValue) {
   if (this.grid.cellsAvailable()) {
-    var value = Math.random() < 0.9 ? 2 : 4;
+    var base = this.startTileValue || 2;
+    var value = forcedValue || (this.startTileValue ? base : (Math.random() < 0.9 ? 2 : 4));
     var tile = new Tile(this.grid.randomAvailableCell(), value);
 
     this.grid.insertTile(tile);
@@ -183,7 +195,7 @@ GameManager.prototype.move = function (direction) {
   });
 
   if (moved) {
-    this.addRandomTile();
+    this.addRandomTile(this.startTileValue);
 
     if (!this.movesAvailable()) {
       this.over = true; // Game over!

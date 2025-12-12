@@ -338,16 +338,18 @@ HTMLActuator.prototype.updateReaction = function (maxTile, emptyCells, scoreDelt
 
 HTMLActuator.prototype.setReactionFace = function (key) {
   if (!this.reactionFace) return;
-  var positions = {
-    smile: "0% 0%",
-    cool: "50% 0%",
-    star: "100% 0%",
-    sad: "0% 100%",
-    party: "50% 100%",
-    tight: "100% 100%"
+  var map = {
+    smile: "smile.png",
+    cool: "cool.png",
+    star: "star.png",
+    sad: "sad.png",
+    party: "party.png",
+    tight: "sad.png"
   };
-  var pos = positions[key] || positions.smile;
-  this.reactionFace.style.backgroundPosition = pos;
+  var file = map[key] || map.smile;
+  this.reactionFace.style.backgroundImage = 'url("images/' + file + '")';
+  this.reactionFace.style.backgroundPosition = "center";
+  this.reactionFace.style.backgroundSize = "contain";
 };
 
 HTMLActuator.prototype.triggerDelight = function () {

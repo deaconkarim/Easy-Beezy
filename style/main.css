@@ -74,7 +74,7 @@ h1.title {
   width: 56px;
   height: 56px;
   border-radius: 16px;
-  background: #f4fbf4 url("../images/beezy-reactions.png") center center / 300% 200% no-repeat;
+  background: #f4fbf4 center center / contain no-repeat;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.65); }
 
