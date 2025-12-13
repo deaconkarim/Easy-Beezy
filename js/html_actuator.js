@@ -457,7 +457,7 @@ HTMLActuator.prototype.showMergeToast = function (value, imgValue) {
 
   this.mergeToast.img.src = "images/tiles/" + imgValue + ".png";
   this.mergeToast.img.alt = label;
-  this.mergeToast.text.textContent = "You created: " + label;
+  this.mergeToast.text.textContent = "You got: " + label;
 
   this.mergeToast.root.classList.remove("hidden");
   this.mergeToast.root.classList.add("visible");
